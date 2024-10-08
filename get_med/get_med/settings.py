@@ -25,6 +25,10 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+LOGIN_REDIRECT_URL = 'home'  # После успешного входа перенаправляем на главную страницу
+LOGOUT_REDIRECT_URL = 'home'  # После выхода тоже перенаправляем на главную страницу
+LOGIN_URL = '/login/'
+
 ALLOWED_HOSTS = []
 
 
