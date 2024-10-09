@@ -70,3 +70,34 @@ footer {
     bottom: 0; /* Прикрепляем футер к нижней части страницы */
     width: 100%; /* Ширина на всю страницу */
 }
+
+/* Основные стили для формы */
+.registration-form {
+    display: flex;
+    flex-direction: column; /* Упорядочить элементы по вертикали */
+    width: 300px; /* Ширина формы */
+    margin: 0 auto; /* Центрирование формы */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Отступ между полями */
+}
+
+.label {
+    margin-bottom: 5px; /* Отступ между лейблом и полем ввода */
+}
+
+input,
+textarea {
+    width: 100%; /* Полная ширина полей ввода */
+    padding: 10px; /* Отступ внутри полей ввода */
+    border: 1px solid #ccc; /* Граница поля ввода */
+    border-radius: 4px; /* Закругленные углы */
+}
+
+input:focus,
+textarea:focus {
+    border-color: #007bff; /* Цвет границы при фокусе */
+    outline: none; /* Убираем стандартный контур */
+}
+
