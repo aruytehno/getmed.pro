@@ -2,12 +2,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.views.decorators.http import require_POST
-from .forms import RegisterForm, ProfileEditForm
+from .forms import UserRegistrationForm, ProfileEditForm
 from django.contrib.auth import logout
 from django.contrib import messages  # Для вывода сообщений
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
-from .forms import RegisterForm  # Убедитесь, что вы импортируете форму
 
 def home(request):
     """Главная страница."""
@@ -32,7 +31,7 @@ def register(request):
         return redirect('home')
 
     # Создаем форму с данными из POST-запроса
-    form = RegisterForm(request.POST or None)
+    form = UserRegistrationForm(request.POST or None)
 
     # Обрабатываем POST запрос с регистрацией
     if request.method == 'POST':
