@@ -21,6 +21,11 @@ venv\Scripts\activate
 pip install --upgrade pip
 ```
 
+###### Установка зависимостей:
+```shell
+pip install -r requirements.txt
+```
+
 ###### Создание миграции для БД:
 ```shell
 python manage.py makemigrations
