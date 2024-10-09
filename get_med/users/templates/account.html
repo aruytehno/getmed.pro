@@ -8,5 +8,10 @@
 <body>
     <h1>Личный кабинет пользователя</h1>
     <a href="{% url 'home' %}">На главную</a>
+
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Выйти</button>
+    </form>
 </body>
 </html>
