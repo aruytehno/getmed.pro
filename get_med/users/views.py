@@ -31,9 +31,10 @@ def register(request):
     if request.user.is_authenticated:
         return redirect('home')
 
-    # Обрабатываем POST запрос с регистрацией
-    form = RegisterForm(request.POST or None)  # Используем None, чтобы избежать лишних строк кода
+    # Создаем форму с данными из POST-запроса
+    form = RegisterForm(request.POST or None)
 
+    # Обрабатываем POST запрос с регистрацией
     if request.method == 'POST':
         # Если форма валидна, сохраняем пользователя и логиним его
         if form.is_valid():
