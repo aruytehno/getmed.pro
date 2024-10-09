@@ -20,12 +20,10 @@ from users import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),  # URL для админки
     path('', views.home, name='home'),  # Главная страница
     path('account/', views.account, name='account'),  # Личный кабинет пользователя
     path('register/', views.register, name='register'),  # Регистрация
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),  # Вход
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),  # Выход
 ]
-
-
