@@ -7,6 +7,9 @@ from django.contrib.auth import logout
 from django.contrib import messages  # Для вывода сообщений
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Profile
 
 def home(request):
     """Главная страница."""
@@ -80,10 +83,12 @@ def edit_profile(request):
     return render(request, 'account/edit_profile.html', {'form': form})
 
 
+
+
 @login_required
 def account_view(request):
-    profile = request.user.profile  # Получаем профиль пользователя
-    context = {
-        'profile': profile,  # Передаём профиль в контекст
-    }
-    return render(request, 'account.html', context)  # Предполагая, что ваш шаблон называется account.html
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None  # Или создать новый профиль, если это необходимо
+    return render(request, 'users/account.html', {'profile': profile})

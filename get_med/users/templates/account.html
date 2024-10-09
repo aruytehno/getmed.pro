@@ -13,8 +13,8 @@
         <li>Фамилия: {{ profile.last_name }}</li>
         <li>Отчество: {{ profile.middle_name }}</li>
         <li>Пол: {{ profile.gender }}</li>
-        <li>Дата рождения: {{ profile.date_of_birth }}</li>
-        <li>Электронная почта: {{ profile.email }}</li>
+        <li>Дата рождения: {{ profile.birth_date }}</li>
+        <li>Электронная почта: {{ profile.user.email }}</li>
     </ul>
 {% else %}
     <p>Профиль не найден.</p>
