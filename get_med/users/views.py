@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.views.decorators.http import require_POST
-from .forms import RegisterForm
+from .forms import RegisterForm, ProfileEditForm
 from django.contrib.auth import logout
 
 def home(request):
@@ -50,3 +50,25 @@ def login_view(request):
         if request.user.is_authenticated:
             return redirect('home')  # Перенаправление, если пользователь уже авторизован
         return render(request, 'login.html')
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('account')  # Перенаправляем на страницу аккаунта
+    else:
+        form = ProfileEditForm(instance=request.user.profile)
+
+    return render(request, 'account/edit_profile.html', {'form': form})
+
+
+@login_required
+def account_view(request):
+    profile = request.user.profile  # Получаем профиль пользователя
+    context = {
+        'profile': profile,  # Передаём профиль в контекст
+    }
+    return render(request, 'account.html', context)  # Предполагая, что ваш шаблон называется account.html

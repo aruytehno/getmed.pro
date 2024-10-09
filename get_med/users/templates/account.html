@@ -5,5 +5,20 @@
 {% block content %}
 <h1>Личный кабинет пользователя</h1>
 <p>Здесь вы можете управлять своим аккаунтом.</p>
+
+{% if profile %}
+    <h2>Информация о профиле</h2>
+    <ul>
+        <li>Имя: {{ profile.first_name }}</li>
+        <li>Фамилия: {{ profile.last_name }}</li>
+        <li>Отчество: {{ profile.middle_name }}</li>
+        <li>Пол: {{ profile.gender }}</li>
+        <li>Дата рождения: {{ profile.date_of_birth }}</li>
+        <li>Электронная почта: {{ profile.email }}</li>
+    </ul>
+{% else %}
+    <p>Профиль не найден.</p>
+{% endif %}
+
 <a href="{% url 'home' %}">На главную</a>
 {% endblock %}

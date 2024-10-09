@@ -19,11 +19,15 @@ from django.urls import path
 from users import views
 from django.contrib.auth import views as auth_views
 
+from users.views import edit_profile
+
 urlpatterns = [
     path('admin/', admin.site.urls),  # URL для админки
     path('', views.home, name='home'),  # Главная страница
     path('account/', views.account, name='account'),  # Личный кабинет пользователя
+
     path('register/', views.register, name='register'),  # Регистрация
     path('login/', views.login_view, name='login'),  # Вход
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),  # Выход
+    path('edit-profile/', edit_profile, name='edit_profile'),
 ]
