@@ -101,3 +101,23 @@ textarea:focus {
     outline: none; /* Убираем стандартный контур */
 }
 
+
+
+.text-center {
+    text-align: center; /* Центрирование текста */
+    margin-bottom: 20px; /* Отступ снизу для заголовка */
+}
+
+.login-link {
+    display: block; /* Делает ссылку блочной */
+    text-align: center; /* Центрирует текст внутри ссылки */
+    margin-top: 20px; /* Отступ сверху для ссылки */
+    color: #007bff; /* Цвет текста ссылки */
+    text-decoration: none; /* Убирает подчеркивание */
+    font-size: 16px; /* Размер шрифта */
+}
+
+.login-link:hover {
+    text-decoration: underline; /* Добавляет подчеркивание при наведении */
+}
+
