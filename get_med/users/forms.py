@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import Profile  # Предполагается, что у вас есть модель Profile
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)  # Добавим поле для email
+    email = forms.EmailField(required=True)  # Email обязателен
 
     class Meta:
         model = User

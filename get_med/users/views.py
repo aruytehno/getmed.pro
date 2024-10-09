@@ -4,6 +4,10 @@ from django.contrib.auth import login, authenticate
 from django.views.decorators.http import require_POST
 from .forms import RegisterForm, ProfileEditForm
 from django.contrib.auth import logout
+from django.contrib import messages  # Для вывода сообщений
+from django.contrib.auth import login
+from django.shortcuts import redirect, render
+from .forms import RegisterForm  # Убедитесь, что вы импортируете форму
 
 def home(request):
     """Главная страница."""
@@ -22,17 +26,28 @@ def account(request):
 
 def register(request):
     """Регистрация нового пользователя."""
+
+    # Если пользователь уже аутентифицирован, перенаправляем на главную страницу
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    # Обрабатываем POST запрос с регистрацией
+    form = RegisterForm(request.POST or None)  # Используем None, чтобы избежать лишних строк кода
+
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        # Если форма валидна, сохраняем пользователя и логиним его
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect('home')  # Перенаправление на главную страницу после успешной регистрации
-    else:
-        if request.user.is_authenticated:
-            return redirect('home')  # Перенаправление, если пользователь уже авторизован
-        form = RegisterForm()
+            login(request, user)  # Логиним пользователя
+            messages.success(request, 'Регистрация прошла успешно! Добро пожаловать!')
+            return redirect('home')
+        # Если форма не валидна, выводим ошибки на фронт
+        else:
+            messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
+
+    # Отображаем форму на странице
     return render(request, 'register.html', {'form': form})
+
 
 def login_view(request):
     if request.method == 'POST':
