@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет</title>
-</head>
-<body>
-    <h1>Личный кабинет пользователя</h1>
-    <a href="{% url 'home' %}">На главную</a>
+{% extends 'base.html' %}
 
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Выйти</button>
-    </form>
-</body>
-</html>
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<h1>Личный кабинет пользователя</h1>
+<p>Здесь вы можете управлять своим аккаунтом.</p>
+<a href="{% url 'home' %}">На главную</a>
+{% endblock %}
