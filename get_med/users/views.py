@@ -1,11 +1,9 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.views.decorators.http import require_POST
 from .forms import UserRegistrationForm, ProfileEditForm
 from django.contrib.auth import logout
 from django.contrib import messages  # Для вывода сообщений
-from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -72,8 +70,11 @@ def login_view(request):
 
 @login_required
 def edit_profile(request):
+    profile = request.user.profile  # Получаем профиль пользователя
+    print('Загружаем данные', request.POST)
     if request.method == 'POST':
-        form = ProfileEditForm(request.POST, instance=request.user.profile)
+        form = ProfileEditForm(request.POST, instance=profile)
+        print('Сохраняем данные', request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Изменения профиля успешно сохранены.')
@@ -81,9 +82,10 @@ def edit_profile(request):
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
-        form = ProfileEditForm(instance=request.user.profile)
+        form = ProfileEditForm(instance=profile)  # Убедись, что профиль передается как instance
 
     return render(request, 'edit_profile.html', {'form': form})
+
 
 
 

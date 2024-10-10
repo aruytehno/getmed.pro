@@ -14,9 +14,11 @@
     </ul>
 {% endif %}
 
+<!-- Форма редактирования профиля -->
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.as_p }}  <!-- Рендерим форму как параграфы (as_p) -->
     <button type="submit" class="btn btn-primary">Сохранить изменения</button>
 </form>
+
 {% endblock %}
