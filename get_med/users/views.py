@@ -76,11 +76,15 @@ def edit_profile(request):
         form = ProfileEditForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('account')  # Перенаправляем на страницу аккаунта
+            messages.success(request, 'Изменения профиля успешно сохранены.')
+            return redirect('account')  # Перенаправляем на страницу аккаунта после успешного сохранения
+        else:
+            messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
         form = ProfileEditForm(instance=request.user.profile)
 
     return render(request, 'edit_profile.html', {'form': form})
+
 
 
 

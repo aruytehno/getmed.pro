@@ -24,8 +24,6 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class ProfileEditForm(forms.ModelForm):
-    """Форма редактирования профиля пользователя."""
-
     GENDER_CHOICES = [
         ('male', 'Мужской'),
         ('female', 'Женский'),
@@ -34,11 +32,12 @@ class ProfileEditForm(forms.ModelForm):
     gender = forms.ChoiceField(choices=GENDER_CHOICES)
 
     class Meta:
-        model = Profile  # Укажите свою модель, если у вас есть
+        model = Profile
         fields = ['first_name', 'last_name', 'middle_name', 'gender', 'birth_date', 'email']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exclude(id=self.instance.id).exists():
+        if User.objects.filter(email=email).exclude(id=self.instance.user.id).exists():
             raise forms.ValidationError("Этот адрес электронной почты уже зарегистрирован.")
         return email
+
