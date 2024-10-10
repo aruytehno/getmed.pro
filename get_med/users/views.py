@@ -80,7 +80,7 @@ def edit_profile(request):
     else:
         form = ProfileEditForm(instance=request.user.profile)
 
-    return render(request, 'account/edit_profile.html', {'form': form})
+    return render(request, 'edit_profile.html', {'form': form})
 
 
 
@@ -91,4 +91,4 @@ def account_view(request):
         profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
         profile = None  # Или создать новый профиль, если это необходимо
-    return render(request, 'users/account.html', {'profile': profile})
+    return render(request, 'account.html', {'profile': profile})

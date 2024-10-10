@@ -24,7 +24,7 @@ from users.views import edit_profile
 urlpatterns = [
     path('admin/', admin.site.urls),  # URL для админки
     path('', views.home, name='home'),  # Главная страница
-    path('account/', views.account, name='account'),  # Личный кабинет пользователя
+    path('account/', views.account_view, name='account'),  # Личный кабинет пользователя
 
     path('register/', views.register, name='register'),  # Регистрация
     path('login/', views.login_view, name='login'),  # Вход
