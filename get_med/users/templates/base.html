@@ -65,46 +65,46 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="{% url 'home' %}#hero" class="active">Home<br></a></li>
-            <li><a href="{% url 'home' %}#about">About</a></li>
-            <li><a href="{% url 'home' %}#services">Services</a></li>
-            <li><a href="{% url 'home' %}#departments">Departments</a></li>
-            <li><a href="{% url 'home' %}#doctors">Doctors</a></li>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <li><a href="{% url 'home' %}#hero" class="active">Главная<br></a></li>
+            <li><a href="{% url 'home' %}#about">О нас</a></li>
+            <li><a href="{% url 'home' %}#services">Услуги</a></li>
+            <li><a href="{% url 'home' %}#departments">Отделения</a></li>
+            <li><a href="{% url 'home' %}#doctors">Врачи</a></li>
+            <li class="dropdown"><a href="#"><span>Выпадающий список</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="{% url 'home' %}#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <li><a href="{% url 'home' %}#">Выпадающий список 1</a></li>
+                <li class="dropdown"><a href="#"><span>Глубокий выпадающий список</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                   <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
+                    <li><a href="#">Глубокий выпадающий список 1</a></li>
+                    <li><a href="#">Глубокий выпадающий список 2</a></li>
+                    <li><a href="#">Глубокий выпадающий список 3</a></li>
+                    <li><a href="#">Глубокий выпадающий список 4</a></li>
+                    <li><a href="#">Глубокий выпадающий список 5</a></li>
                   </ul>
                 </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
+                <li><a href="#">Выпадающий список 2</a></li>
+                <li><a href="#">Выпадающий список 3</a></li>
+                <li><a href="#">Выпадающий список 4</a></li>
               </ul>
             </li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">Контакты</a></li>
             {% if user.is_authenticated %}
-                    <li><a href="{% url 'account' %}">Личный кабинет</a></li>
-                    <li>
-                        <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit">Выход</button>
-                        </form>
-                    </li>
-                {% else %}
-                    <li><a href="{% url 'register' %}">Регистрация</a></li>
-                    <li><a href="{% url 'login' %}">Вход</a></li>
-                {% endif %}
+                <li><a href="{% url 'account' %}">Личный кабинет</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Выход</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'register' %}">Регистрация</a></li>
+                <li><a href="{% url 'login' %}">Вход</a></li>
+            {% endif %}
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <a class="cta-btn d-none d-sm-block" href="#appointment">Make an Appointment</a>
+        <a class="cta-btn d-none d-sm-block" href="#appointment">Записаться на приём</a>
 
       </div>
 
@@ -129,7 +129,7 @@
           <div class="footer-contact pt-3">
             <p>A108 Adam Street</p>
             <p>New York, NY 535022</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p class="mt-3"><strong>Телефон:</strong> <span>+1 5589 55488 55</span></p>
             <p><strong>Email:</strong> <span>info@example.com</span></p>
           </div>
           <div class="social-links d-flex mt-4">
@@ -141,7 +141,7 @@
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
+          <h4>Полезные ссылки</h4>
           <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#">About us</a></li>
@@ -152,25 +152,22 @@
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
+          <h4>Услуги</h4>
           <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
+            <li><a href="#">Медицинские услуги</a></li>
+            <li><a href="#">Консультации</a></li>
+            <li><a href="#">Диагностика</a></li>
+            <li><a href="#">Лечение</a></li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Hic solutasetp</h4>
-          <ul>
-            <li><a href="#">Molestiae accusamus iure</a></li>
-            <li><a href="#">Excepturi dignissimos</a></li>
-            <li><a href="#">Suscipit distinctio</a></li>
-            <li><a href="#">Dilecta</a></li>
-            <li><a href="#">Sit quas consectetur</a></li>
-          </ul>
+          <h4>Подписаться на рассылку</h4>
+          <p>Подпишитесь на нашу рассылку, чтобы быть в курсе последних новостей и предложений.</p>
+          <form action="" method="post">
+            <input type="email" name="email" placeholder="Ваш Email" required>
+            <input type="submit" value="Подписаться">
+          </form>
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
@@ -194,7 +191,7 @@
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Создано с помощью <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>
 
