@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile  # Убедитесь, что у вас есть модель Profile
 from django.contrib.auth import get_user_model
+from django.forms.widgets import DateInput
 
 User = get_user_model()
 
@@ -31,13 +32,16 @@ class ProfileEditForm(forms.ModelForm):
 
     gender = forms.ChoiceField(choices=GENDER_CHOICES)
 
+    # Добавляем виджет для отображения поля даты рождения
+    birth_date = forms.DateField(widget=DateInput(attrs={'type': 'date'}))
+
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'middle_name', 'gender', 'birth_date', 'email']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exclude(id=self.instance.user.id).exists():
+        if Profile.objects.filter(email=email).exclude(id=self.instance.id).exists():
             raise forms.ValidationError("Этот адрес электронной почты уже зарегистрирован.")
         return email
 
