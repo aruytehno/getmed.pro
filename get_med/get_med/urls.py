@@ -25,7 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # URL для админки
     path('', views.home, name='home'),  # Главная страница
     path('account/', views.account_view, name='account'),  # Личный кабинет пользователя
-
     path('register/', views.register, name='register'),  # Регистрация
     path('login/', views.login_view, name='login'),  # Вход
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),  # Выход

@@ -71,10 +71,8 @@ def login_view(request):
 @login_required
 def edit_profile(request):
     profile = request.user.profile  # Получаем профиль пользователя
-    print('Загружаем данные', request.POST)
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, instance=profile)
-        print('Сохраняем данные', request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Изменения профиля успешно сохранены.')
