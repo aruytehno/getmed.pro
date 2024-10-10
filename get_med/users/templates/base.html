@@ -2,9 +2,8 @@
 {% load static %}
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>{% block title %}My Site{% endblock %}</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -36,38 +35,8 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-
-<!--    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">  &lt;!&ndash; Добавьте ссылку на CSS, если у вас есть &ndash;&gt;-->
 </head>
 <body class="index-page">
-<!--    <header>-->
-<!--        <h1>Добро пожаловать на мой сайт!</h1>-->
-<!--        <nav>-->
-<!--            <ul>-->
-<!--                <li><a href="{% url 'home' %}">Главная</a></li>-->
-
-
-
-<!--                {% if user.is_authenticated %}-->
-<!--                    <li><a href="{% url 'account' %}">Личный кабинет</a></li>-->
-<!--                    <li>-->
-<!--                        <form action="{% url 'logout' %}" method="post" style="display:inline;">-->
-<!--                            {% csrf_token %}-->
-<!--                            <button type="submit">Выход</button>-->
-<!--                        </form>-->
-<!--                    </li>-->
-<!--                {% else %}-->
-<!--                    <li><a href="{% url 'register' %}">Регистрация</a></li>-->
-<!--                    <li><a href="{% url 'login' %}">Вход</a></li>-->
-<!--                {% endif %}-->
-
-<!--            </ul>-->
-<!--        </nav>-->
-<!--    </header>-->
-
-
   <header id="header" class="header sticky-top">
 
     <div class="topbar d-flex align-items-center">
@@ -88,22 +57,22 @@
     <div class="branding d-flex align-items-center">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <a href="{% url 'home' %}#hero" class="logo d-flex align-items-center me-auto">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.png" alt=""> -->
-          <h1 class="sitename">Medilab</h1>
+          <h1 class="sitename">GetMed</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="#hero" class="active">Home<br></a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#departments">Departments</a></li>
-            <li><a href="#doctors">Doctors</a></li>
+            <li><a href="{% url 'home' %}#hero" class="active">Home<br></a></li>
+            <li><a href="{% url 'home' %}#about">About</a></li>
+            <li><a href="{% url 'home' %}#services">Services</a></li>
+            <li><a href="{% url 'home' %}#departments">Departments</a></li>
+            <li><a href="{% url 'home' %}#doctors">Doctors</a></li>
             <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="#">Dropdown 1</a></li>
+                <li><a href="{% url 'home' %}#">Dropdown 1</a></li>
                 <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                   <ul>
                     <li><a href="#">Deep Dropdown 1</a></li>
@@ -119,6 +88,18 @@
               </ul>
             </li>
             <li><a href="#contact">Contact</a></li>
+            {% if user.is_authenticated %}
+                    <li><a href="{% url 'account' %}">Личный кабинет</a></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Выход</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'register' %}">Регистрация</a></li>
+                    <li><a href="{% url 'login' %}">Вход</a></li>
+                {% endif %}
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
