@@ -10,17 +10,26 @@
             {{ error_message }}
         </div>
     {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="username" class="form-label">Имя пользователя:</label>
-            <input type="text" name="username" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Пароль:</label>
-            <input type="password" name="password" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Войти</button>
-    </form>
+    <div class="border p-4 rounded bg-light mx-auto" style="max-width: 400px;">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Имя пользователя:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span> <!-- Иконка пользователя -->
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль:</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span> <!-- Иконка замка -->
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Войти</button> <!-- Убираем анимацию -->
+        </form>
+    </div>
 </div>
+
 {% endblock %}
