@@ -70,29 +70,23 @@ def login_view(request):
 
 @login_required
 def edit_profile(request):
-    profile = request.user.profile  # Получаем профиль пользователя
+    profile, created = Profile.objects.get_or_create(user=request.user)  # Создает профиль, если его нет
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
             messages.success(request, 'Изменения профиля успешно сохранены.')
-            return redirect('account')  # Перенаправляем на страницу аккаунта после успешного сохранения
+            return redirect('account')
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
-        form = ProfileEditForm(instance=profile)  # Убедись, что профиль передается как instance
+        form = ProfileEditForm(instance=profile)
 
     return render(request, 'edit_profile.html', {'form': form})
 
 
 
-
-
-
 @login_required
 def account_view(request):
-    try:
-        profile = Profile.objects.get(user=request.user)
-    except Profile.DoesNotExist:
-        profile = None  # Или создать новый профиль, если это необходимо
+    profile, created = Profile.objects.get_or_create(user=request.user)
     return render(request, 'account.html', {'profile': profile})

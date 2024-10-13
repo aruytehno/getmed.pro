@@ -42,9 +42,3 @@ class ProfileEditForm(forms.ModelForm):
         model = Profile
         fields = ['middle_name', 'gender', 'birth_date']
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if Profile.objects.filter(email=email).exclude(id=self.instance.id).exists():
-            raise forms.ValidationError("Этот адрес электронной почты уже зарегистрирован.")
-        return email
-
