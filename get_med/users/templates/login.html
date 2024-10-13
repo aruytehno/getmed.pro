@@ -3,14 +3,14 @@
 {% block title %}Вход{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="text-center">Вход</h2>
+<div class="container mt-5 mb-5">
     {% if error_message %}
         <div class="alert alert-danger">
             {{ error_message }}
         </div>
     {% endif %}
     <div class="border p-4 rounded bg-light mx-auto" style="max-width: 400px;">
+        <h2 class="text-center">Вход</h2>
         <form method="post">
             {% csrf_token %}
             <div class="mb-3">
