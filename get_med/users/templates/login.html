@@ -4,31 +4,53 @@
 
 {% block content %}
 <div class="container mt-5 mb-5">
-    {% if error_message %}
-        <div class="alert alert-danger">
-            {{ error_message }}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">Вход</h2>
+
+                    <!-- Сообщение об ошибке, если оно есть -->
+                    {% if error_message %}
+                        <div class="alert alert-danger">
+                            {{ error_message }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Форма для входа -->
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Имя пользователя:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" name="username" class="form-control" required>
+                                <div class="invalid-feedback">
+                                    Пожалуйста, введите имя пользователя.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Пароль:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" name="password" class="form-control" required>
+                                <div class="invalid-feedback">
+                                    Пожалуйста, введите пароль.
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Войти</button>
+                    </form>
+
+                    <!-- Дополнительная ссылка для регистрации -->
+                    <div class="text-center mt-3">
+                        <p>Нет учётной записи? <a href="{% url 'register' %}">Зарегистрируйтесь</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endif %}
-    <div class="border p-4 rounded bg-light mx-auto" style="max-width: 400px;">
-        <h2 class="text-center">Вход</h2>
-        <form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="username" class="form-label">Имя пользователя:</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-person"></i></span> <!-- Иконка пользователя -->
-                    <input type="text" name="username" class="form-control" required>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Пароль:</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-lock"></i></span> <!-- Иконка замка -->
-                    <input type="password" name="password" class="form-control" required>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Войти</button> <!-- Убираем анимацию -->
-        </form>
     </div>
 </div>
 
