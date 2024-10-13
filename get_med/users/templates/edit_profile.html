@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="container mt-5 mb-5">
-    <div class="card p-4">
+    <div class="card shadow-lg p-4">
         <h2 class="text-center mb-4">Редактирование профиля</h2>
 
         <!-- Вывод сообщений об успешном сохранении или ошибках -->
         {% if messages %}
-            <div class="alert alert-info">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <ul class="list-unstyled mb-0">
                     {% for message in messages %}
                         <li{% if message.tags %} class="alert-{{ message.tags }}"{% endif %}>
@@ -17,16 +17,62 @@
                         </li>
                     {% endfor %}
                 </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
 
         <!-- Форма редактирования профиля -->
-        <form method="post">
+        <form method="post" class="needs-validation" novalidate>
             {% csrf_token %}
-            <div class="mb-3">
-                {{ form.as_p }}  <!-- Рендерим форму как параграфы (as_p) -->
+            <div class="row mb-3">
+                <!-- Рендерим каждый элемент формы с контролем в колонках для лучшего представления -->
+                {{ form.first_name.label_tag }}
+                <div class="col-sm-12">
+                    {{ form.first_name }}
+                    <div class="invalid-feedback">Пожалуйста, введите имя.</div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Сохранить изменения</button>
+
+            <div class="row mb-3">
+                {{ form.last_name.label_tag }}
+                <div class="col-sm-12">
+                    {{ form.last_name }}
+                    <div class="invalid-feedback">Пожалуйста, введите фамилию.</div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ form.middle_name.label_tag }}
+                <div class="col-sm-12">
+                    {{ form.middle_name }}
+                    <div class="invalid-feedback">Пожалуйста, введите отчество.</div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ form.gender.label_tag }}
+                <div class="col-sm-12">
+                    {{ form.gender }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ form.birth_date.label_tag }}
+                <div class="col-sm-12">
+                    {{ form.birth_date }}
+                    <div class="invalid-feedback">Пожалуйста, выберите дату рождения.</div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                {{ form.user.email.label_tag }}
+                <div class="col-sm-12">
+                    {{ form.user.email }}
+                    <div class="invalid-feedback">Пожалуйста, введите электронную почту.</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 btn-lg mt-4">Сохранить изменения</button>
         </form>
     </div>
 </div>
