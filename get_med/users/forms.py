@@ -40,7 +40,7 @@ class ProfileEditForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'middle_name', 'gender', 'birth_date', 'email']
+        fields = ['middle_name', 'gender', 'birth_date']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
