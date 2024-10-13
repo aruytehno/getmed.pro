@@ -3,24 +3,29 @@
 {% block title %}Личный кабинет{% endblock %}
 
 {% block content %}
-<h1>Личный кабинет пользователя</h1>
-<p>Здесь вы можете управлять своим аккаунтом.</p>
+<div class="container mt-5 mb-5">
+    <div class="card p-4">
+        <h1 class="text-center mb-4">Личный кабинет пользователя</h1>
+        <p class="text-center">Здесь вы можете управлять своим аккаунтом.</p>
 
-{% if profile %}
-    <h2>Информация о профиле</h2>
-    <ul>
-        <li>Имя: {{ profile.first_name }}</li>
-        <li>Фамилия: {{ profile.last_name }}</li>
-        <li>Отчество: {{ profile.middle_name }}</li>
-        <li>Пол: {{ profile.gender }}</li>
-        <li>Дата рождения: {{ profile.birth_date }}</li>
-        <li>Электронная почта: {{ profile.user.email }}</li>
-    </ul>
-    <!-- Добавляем ссылку на редактирование профиля -->
-    <a href="{% url 'edit_profile' %}">Редактировать профиль</a>
-{% else %}
-    <p>Профиль не найден.</p>
-{% endif %}
+        {% if profile %}
+            <h2 class="mb-3">Информация о профиле</h2>
+            <ul class="list-group mb-4">
+                <li class="list-group-item"><strong>Имя:</strong> {{ profile.first_name }}</li>
+                <li class="list-group-item"><strong>Фамилия:</strong> {{ profile.last_name }}</li>
+                <li class="list-group-item"><strong>Отчество:</strong> {{ profile.middle_name }}</li>
+                <li class="list-group-item"><strong>Пол:</strong> {{ profile.gender }}</li>
+                <li class="list-group-item"><strong>Дата рождения:</strong> {{ profile.birth_date }}</li>
+                <li class="list-group-item"><strong>Электронная почта:</strong> {{ profile.user.email }}</li>
+            </ul>
+            <!-- Кнопка для редактирования профиля -->
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary w-100 mb-3">Редактировать профиль</a>
+        {% else %}
+            <p class="text-danger">Профиль не найден.</p>
+        {% endif %}
 
-<a href="{% url 'home' %}">На главную</a>
+        <!-- Кнопка для возвращения на главную страницу -->
+        <a href="{% url 'home' %}" class="btn btn-secondary w-100">На главную</a>
+    </div>
+</div>
 {% endblock %}
