@@ -70,14 +70,20 @@ def login_view(request):
 
 @login_required
 def edit_profile(request):
-    profile, created = Profile.objects.get_or_create(user=request.user)  # Создает профиль, если его нет
+    # Получаем или создаем профиль для текущего пользователя
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    if created:
+        messages.info(request, 'Профиль был создан, так как его ранее не существовало.')
+
     if request.method == 'POST':
+        # Передаем профиль в форму для редактирования
         form = ProfileEditForm(request.POST, instance=profile)
         if form.is_valid():
-            # Обновляем имя и фамилию пользователя
-            request.user.first_name = form.cleaned_data['first_name']
-            request.user.last_name = form.cleaned_data['last_name']
-            request.user.save()
+            # Сохраняем изменения в профиле и пользователе
+            profile.user.first_name = form.cleaned_data['first_name']
+            profile.user.last_name = form.cleaned_data['last_name']
+            profile.user.save()
 
             form.save()
             messages.success(request, 'Изменения профиля успешно сохранены.')
@@ -85,24 +91,30 @@ def edit_profile(request):
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
+        # Инициализируем форму текущими данными пользователя и профиля
         form = ProfileEditForm(instance=profile, initial={
-            'first_name': request.user.first_name,
-            'last_name': request.user.last_name,
+            'first_name': profile.user.first_name,
+            'last_name': profile.user.last_name,
         })
 
     return render(request, 'edit_profile.html', {'form': form})
 
 
-
-
 @login_required
 def account_view(request):
-    # Получаем профиль пользователя
-    profile, created = Profile.objects.get_or_create(user=request.user)
+    # Пытаемся получить профиль пользователя
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        # Если профиль не существует, перенаправляем пользователя на страницу создания профиля
+        messages.warning(request, 'Ваш профиль отсутствует. Пожалуйста, создайте его.')
+        return redirect('edit_profile')
+
     # Передаем в контекст данные профиля и пользователя
     context = {
         'user': request.user,
         'profile': profile,
     }
     return render(request, 'account.html', context)
+
 
