@@ -8,15 +8,29 @@
         <h1 class="text-center mb-4">Личный кабинет пользователя</h1>
         <p class="text-center">Здесь вы можете управлять своим аккаунтом.</p>
 
-        {% if profile %}
+        {% if profile and profile.user %}
             <h2 class="mb-3">Информация о профиле</h2>
             <ul class="list-group mb-4">
-                <li class="list-group-item"><strong>Имя:</strong> {{ profile.user.first_name }}</li>
-                <li class="list-group-item"><strong>Фамилия:</strong> {{ profile.user.last_name }}</li>
-                <li class="list-group-item"><strong>Отчество:</strong> {{ profile.middle_name }}</li>
-                <li class="list-group-item"><strong>Пол:</strong> {{ profile.gender }}</li>
-                <li class="list-group-item"><strong>Дата рождения:</strong> {{ profile.birth_date }}</li>
-                <li class="list-group-item"><strong>Электронная почта:</strong> {{ profile.user.email }}</li>
+                <li class="list-group-item"><strong>Имя:</strong> {{ profile.user.first_name|default:"Не указано" }}</li>
+                <li class="list-group-item"><strong>Фамилия:</strong> {{ profile.user.last_name|default:"Не указано" }}</li>
+                <li class="list-group-item"><strong>Отчество:</strong> {{ profile.middle_name|default:"Не указано" }}</li>
+                <li class="list-group-item"><strong>Пол:</strong>
+                    {% if profile.gender == "M" %}
+                        Мужской
+                    {% elif profile.gender == "F" %}
+                        Женский
+                    {% else %}
+                        Не указан
+                    {% endif %}
+                </li>
+                <li class="list-group-item"><strong>Дата рождения:</strong>
+                    {% if profile.birth_date %}
+                        {{ profile.birth_date|date:"d-m-Y" }}
+                    {% else %}
+                        Не указана
+                    {% endif %}
+                </li>
+                <li class="list-group-item"><strong>Электронная почта:</strong> {{ profile.user.email|default:"Не указана" }}</li>
             </ul>
             <!-- Кнопка для редактирования профиля -->
             <a href="{% url 'edit_profile' %}" class="btn btn-primary w-100 mb-3">Редактировать профиль</a>
