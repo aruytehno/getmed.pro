@@ -26,9 +26,9 @@ class UserRegistrationForm(UserCreationForm):
 
 class ProfileEditForm(forms.ModelForm):
     birth_date = forms.DateField(
-        widget=DateInput(attrs={'type': 'date'}),  # Виджет с типом "date"
-        required=False,
-        input_formats=['%Y-%m-%d']  # Указываем формат даты
+        widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+        label="Дата рождения",
+        required=True
     )
 
     GENDER_CHOICES = [
