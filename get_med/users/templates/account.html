@@ -11,8 +11,8 @@
         {% if profile %}
             <h2 class="mb-3">Информация о профиле</h2>
             <ul class="list-group mb-4">
-                <li class="list-group-item"><strong>Имя:</strong> {{ profile.first_name }}</li>
-                <li class="list-group-item"><strong>Фамилия:</strong> {{ profile.last_name }}</li>
+                <li class="list-group-item"><strong>Имя:</strong> {{ profile.user.first_name }}</li>
+                <li class="list-group-item"><strong>Фамилия:</strong> {{ profile.user.last_name }}</li>
                 <li class="list-group-item"><strong>Отчество:</strong> {{ profile.middle_name }}</li>
                 <li class="list-group-item"><strong>Пол:</strong> {{ profile.gender }}</li>
                 <li class="list-group-item"><strong>Дата рождения:</strong> {{ profile.birth_date }}</li>

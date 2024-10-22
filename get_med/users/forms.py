@@ -36,9 +36,13 @@ class ProfileEditForm(forms.ModelForm):
         ('female', 'Женский'),
     ]
 
+    first_name = forms.CharField(max_length=30, required=False, label='Имя')
+    last_name = forms.CharField(max_length=30, required=False, label='Фамилия')
+
     gender = forms.ChoiceField(choices=GENDER_CHOICES)
 
     class Meta:
         model = Profile
-        fields = ['middle_name', 'gender', 'birth_date']
+        fields = ['first_name', 'last_name', 'middle_name', 'gender', 'birth_date']
+
 

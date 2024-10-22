@@ -74,19 +74,35 @@ def edit_profile(request):
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, instance=profile)
         if form.is_valid():
+            # Обновляем имя и фамилию пользователя
+            request.user.first_name = form.cleaned_data['first_name']
+            request.user.last_name = form.cleaned_data['last_name']
+            request.user.save()
+
             form.save()
             messages.success(request, 'Изменения профиля успешно сохранены.')
             return redirect('account')
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
-        form = ProfileEditForm(instance=profile)
+        form = ProfileEditForm(instance=profile, initial={
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+        })
 
     return render(request, 'edit_profile.html', {'form': form})
 
 
 
+
 @login_required
 def account_view(request):
+    # Получаем профиль пользователя
     profile, created = Profile.objects.get_or_create(user=request.user)
-    return render(request, 'account.html', {'profile': profile})
+    # Передаем в контекст данные профиля и пользователя
+    context = {
+        'user': request.user,
+        'profile': profile,
+    }
+    return render(request, 'account.html', context)
+
