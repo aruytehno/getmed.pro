@@ -31,7 +31,43 @@
                     {% endif %}
                 </li>
                 <li class="list-group-item"><strong>Электронная почта:</strong> {{ profile.user.email|default:"Не указана" }}</li>
+                <li class="list-group-item"><strong>Роль:</strong>
+                    {% if role == "doctor" %}
+                        Доктор
+                    {% elif role == "patient" %}
+                        Пациент
+                    {% else %}
+                        Не указана
+                    {% endif %}
+                </li>
             </ul>
+
+            <!-- Дополнительные данные для доктора -->
+            {% if role == "doctor" %}
+                <h3 class="mb-3">Информация о докторе</h3>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item"><strong>Специализация:</strong> {{ profile.specialization|default:"Не указана" }}</li>
+                    <li class="list-group-item"><strong>Опыт работы:</strong> {{ profile.experience|default:"Не указан" }} лет</li>
+                    <li class="list-group-item"><strong>Контактный телефон:</strong> {{ profile.contact_phone|default:"Не указан" }}</li>
+                </ul>
+            {% endif %}
+
+            <!-- Дополнительные данные для пациента -->
+            {% if role == "patient" %}
+                <h3 class="mb-3">Информация о пациенте</h3>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item"><strong>Номер медицинской карты:</strong> {{ profile.medical_card_number|default:"Не указан" }}</li>
+                    <li class="list-group-item"><strong>Контактный телефон:</strong> {{ profile.contact_phone|default:"Не указан" }}</li>
+                    <li class="list-group-item"><strong>Дата последнего визита:</strong>
+                        {% if profile.last_visit %}
+                            {{ profile.last_visit|date:"d-m-Y" }}
+                        {% else %}
+                            Не указана
+                        {% endif %}
+                    </li>
+                </ul>
+            {% endif %}
+
             <!-- Кнопка для редактирования профиля -->
             <a href="{% url 'edit_profile' %}" class="btn btn-primary w-100 mb-3">Редактировать профиль</a>
         {% else %}

@@ -13,17 +13,27 @@ User = get_user_model()
 class UserRegistrationForm(UserCreationForm):
     """Форма регистрации нового пользователя."""
 
-    email = forms.EmailField(required=True)  # Добавляем поле для email
+    email = forms.EmailField(required=True, label="Электронная почта")  # Добавляем поле для email
+    role = forms.ChoiceField(choices=[('doctor', 'Доктор'), ('patient', 'Пациент')], label="Роль")  # Поле для выбора роли
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']  # password1 и password2 берутся из UserCreationForm
+        fields = ['username', 'email', 'password1', 'password2', 'role']  # Добавляем 'role' в список полей
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Этот адрес электронной почты уже используется.")
         return email
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+            # Создаем профиль пользователя с выбранной ролью
+            profile = Profile(user=user, role=self.cleaned_data['role'])
+            profile.save()
+        return user
 
 
 class ProfileEditForm(forms.ModelForm):

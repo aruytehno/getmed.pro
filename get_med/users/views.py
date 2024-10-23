@@ -110,10 +110,14 @@ def account_view(request):
         messages.warning(request, 'Ваш профиль отсутствует. Пожалуйста, создайте его.')
         return redirect('edit_profile')
 
-    # Передаем в контекст данные профиля и пользователя
+    # Проверяем роль пользователя
+    user_role = getattr(profile, 'role', 'Не указана')  # Используем getattr для избежания ошибки, если role отсутствует
+
+    # Передаем в контекст данные профиля, пользователя и роль
     context = {
         'user': request.user,
         'profile': profile,
+        'role': user_role,
     }
     return render(request, 'account.html', context)
 

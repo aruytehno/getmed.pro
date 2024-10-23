@@ -5,10 +5,16 @@ from django.db.models.signals import post_save
 
 
 class Profile(models.Model):
+    USER_ROLES = [
+        ('doctor', 'Доктор'),
+        ('patient', 'Пациент'),
+    ]
+
     # Связь с моделью User
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # Дополнительные поля профиля
+    role = models.CharField(max_length=7, choices=USER_ROLES, default='patient')
     middle_name = models.CharField(max_length=30, blank=True, default='')
     gender = models.CharField(max_length=6, choices=[('male', 'Мужской'), ('female', 'Женский')], blank=True, default='')
     birth_date = models.DateField(null=True, blank=True)
