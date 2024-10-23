@@ -18,6 +18,7 @@ class Profile(models.Model):
     middle_name = models.CharField(max_length=30, blank=True, default='')
     gender = models.CharField(max_length=6, choices=[('male', 'Мужской'), ('female', 'Женский')], blank=True, default='')
     birth_date = models.DateField(null=True, blank=True)
+    new_email = models.EmailField(blank=True, null=True)
 
     def __str__(self):
         return f'Профиль пользователя {self.user.username}'

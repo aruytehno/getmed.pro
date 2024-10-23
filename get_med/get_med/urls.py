@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from users import views
 from django.contrib.auth import views as auth_views
-
+from users.views import confirm_email
 from users.views import edit_profile
 
 urlpatterns = [
@@ -29,4 +29,5 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),  # Вход
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),  # Выход
     path('edit-profile/', edit_profile, name='edit_profile'),
+    path('confirm-email/<uidb64>/<token>/', confirm_email, name='confirm_email'),
 ]

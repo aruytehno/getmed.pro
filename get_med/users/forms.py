@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile  # Убедитесь, что у вас есть модель Profile
 from django.contrib.auth import get_user_model
-from django.forms.widgets import DateInput
+from .utils import send_confirmation_email
 from django.core.exceptions import ValidationError
 from datetime import date
 
@@ -57,9 +57,11 @@ class ProfileEditForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'middle_name', 'gender', 'birth_date', 'role']
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)  # Извлекаем request из kwargs
         super(ProfileEditForm, self).__init__(*args, **kwargs)
-        # Инициализируем поле email текущим значением из связанного пользователя
-        self.fields['email'].initial = self.instance.user.email
+        if self.instance and self.instance.user:
+            self.fields['email'].initial = self.instance.user.email  # Установка начального значения email
+
 
     def clean_birth_date(self):
         birth_date = self.cleaned_data.get('birth_date')
@@ -74,12 +76,17 @@ class ProfileEditForm(forms.ModelForm):
 
 
     def save(self, commit=True):
-        # Сохраняем изменения в профиле
         profile = super().save(commit=False)
         user = profile.user
-        # Обновляем email пользователя
-        user.email = self.cleaned_data['email']
+        new_email = self.cleaned_data['email']
+
+        # Если email изменился, отправляем подтверждение
+        if new_email != user.email:
+            send_confirmation_email(self.request, user)
+
         if commit:
-            user.save()
-            profile.save()
+            user.email = new_email  # Обновление email у пользователя
+            user.save()  # Сохраняем пользователя
+            profile.save()  # Сохраняем профиль
+
         return profile

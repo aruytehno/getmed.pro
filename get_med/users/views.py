@@ -1,4 +1,6 @@
-from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from django.utils.http import urlsafe_base64_decode
+from .tokens import email_confirmation_token
 from django.contrib.auth import login, authenticate
 from django.views.decorators.http import require_POST
 from .forms import UserRegistrationForm, ProfileEditForm
@@ -78,7 +80,7 @@ def edit_profile(request):
 
     if request.method == 'POST':
         # Передаем профиль в форму для редактирования
-        form = ProfileEditForm(request.POST, instance=profile)
+        form = ProfileEditForm(request.POST, instance=profile, request=request)  # Передаем request
         if form.is_valid():
             # Сохраняем изменения в профиле и пользователе
             profile.user.first_name = form.cleaned_data['first_name']
@@ -92,7 +94,7 @@ def edit_profile(request):
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
         # Инициализируем форму текущими данными пользователя и профиля
-        form = ProfileEditForm(instance=profile, initial={
+        form = ProfileEditForm(instance=profile, request=request, initial={
             'first_name': profile.user.first_name,
             'last_name': profile.user.last_name,
         })
@@ -122,3 +124,20 @@ def account_view(request):
     return render(request, 'account.html', context)
 
 
+def confirm_email(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and email_confirmation_token.check_token(user, token):
+        # Меняем email только после подтверждения
+        user.email = user.profile.new_email  # Замените на сохраненный новый email
+        user.profile.new_email = ''
+        user.save()
+        messages.success(request, 'Ваш email успешно подтвержден.')
+        return redirect('account')  # Возврат на страницу аккаунта
+    else:
+        messages.error(request, 'Ссылка для подтверждения недействительна.')
+        return redirect('account')
