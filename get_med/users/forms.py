@@ -37,11 +37,29 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class ProfileEditForm(forms.ModelForm):
+    GENDER_CHOICES = [
+        ('male', 'Мужской'),
+        ('female', 'Женский'),
+    ]
+
+    first_name = forms.CharField(max_length=30, required=False, label='Имя')
+    last_name = forms.CharField(max_length=30, required=False, label='Фамилия')
+    email = forms.EmailField(label='Email', required=True)
+    gender = forms.ChoiceField(choices=GENDER_CHOICES)
     birth_date = forms.DateField(
         widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
         label="Дата рождения",
         required=True
     )
+
+    class Meta:
+        model = Profile
+        fields = ['first_name', 'last_name', 'middle_name', 'gender', 'birth_date', 'role']
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileEditForm, self).__init__(*args, **kwargs)
+        # Инициализируем поле email текущим значением из связанного пользователя
+        self.fields['email'].initial = self.instance.user.email
 
     def clean_birth_date(self):
         birth_date = self.cleaned_data.get('birth_date')
@@ -54,18 +72,14 @@ class ProfileEditForm(forms.ModelForm):
                 raise ValidationError("Возраст должен быть не более 100 лет.")
         return birth_date
 
-    GENDER_CHOICES = [
-        ('male', 'Мужской'),
-        ('female', 'Женский'),
-    ]
 
-    first_name = forms.CharField(max_length=30, required=False, label='Имя')
-    last_name = forms.CharField(max_length=30, required=False, label='Фамилия')
-
-    gender = forms.ChoiceField(choices=GENDER_CHOICES)
-
-    class Meta:
-        model = Profile
-        fields = ['first_name', 'last_name', 'middle_name', 'gender', 'birth_date', 'role']
-
-
+    def save(self, commit=True):
+        # Сохраняем изменения в профиле
+        profile = super().save(commit=False)
+        user = profile.user
+        # Обновляем email пользователя
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+            profile.save()
+        return profile
