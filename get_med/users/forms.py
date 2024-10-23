@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .models import Profile  # Убедитесь, что у вас есть модель Profile
 from django.contrib.auth import get_user_model
 from django.forms.widgets import DateInput
+from django.core.exceptions import ValidationError
+from datetime import date
 
 User = get_user_model()
 
@@ -30,6 +32,17 @@ class ProfileEditForm(forms.ModelForm):
         label="Дата рождения",
         required=True
     )
+
+    def clean_birth_date(self):
+        birth_date = self.cleaned_data.get('birth_date')
+        if birth_date:
+            today = date.today()
+            age = (today - birth_date).days // 365  # Рассчитываем возраст
+            if age < 18:
+                raise ValidationError("Возраст должен быть не менее 18 лет.")
+            if age > 100:
+                raise ValidationError("Возраст должен быть не более 100 лет.")
+        return birth_date
 
     GENDER_CHOICES = [
         ('male', 'Мужской'),
