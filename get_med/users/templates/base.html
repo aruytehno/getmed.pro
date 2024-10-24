@@ -72,9 +72,14 @@
             <li><a href="{% url 'home' %}#doctors">Врачи</a></li>
             <li><a href="#contact">Контакты</a></li>
             {% if user.is_authenticated %}
-            <li class="dropdown"><a href="#"><span>Личный кабинет</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+      <li class="dropdown">
+        <a href="#"><span>Личный кабинет</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
+            {% if user.profile.role == 'doctor' %}
+                <li><a href="#">Заказы</a></li>
+            {% elif user.profile.role == 'patient' %}
                 <li><a href="#">Медицинская карта</a></li>
+            {% endif %}
                 <li><a href="{% url 'account' %}">Настройки профиля</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="post" style="display:inline;">
