@@ -72,26 +72,38 @@
             <li><a href="{% url 'home' %}#doctors">Врачи</a></li>
             <li><a href="#contact">Контакты</a></li>
             {% if user.is_authenticated %}
-      <li class="dropdown">
+    <li class="dropdown">
         <a href="#"><span>Личный кабинет</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
+        <ul>
             {% if user.profile.role == 'doctor' %}
                 <li><a href="#">Заказы</a></li>
             {% elif user.profile.role == 'patient' %}
                 <li><a href="#">Медицинская карта</a></li>
             {% endif %}
-                <li><a href="{% url 'account' %}">Настройки профиля</a></li>
-                <li>
-                    <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <a href="#" onclick="this.closest('form').submit()" style="cursor: pointer; text-decoration: none;">Выход</a>
-                    </form>
-                </li>
-              </ul>
+            <li><a href="{% url 'account' %}">Настройки профиля</a></li>
+
+            <!-- Переключатель типа профиля -->
+            <li>
+                <form action="{% url 'edit_profile' %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <select name="role" onchange="this.form.submit();" class="form-select">
+                        <option value="doctor" {% if user.profile.role == 'doctor' %}selected{% endif %}>Доктор</option>
+                        <option value="patient" {% if user.profile.role == 'patient' %}selected{% endif %}>Пациент</option>
+                    </select>
+                </form>
             </li>
-            {% else %}
-                <li><a href="{% url 'login' %}">Вход</a></li>
-            {% endif %}
+
+            <li>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <a href="#" onclick="this.closest('form').submit()" style="cursor: pointer; text-decoration: none;">Выход</a>
+                </form>
+            </li>
+        </ul>
+    </li>
+{% else %}
+    <li><a href="{% url 'login' %}">Вход</a></li>
+{% endif %}
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

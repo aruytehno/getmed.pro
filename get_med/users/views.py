@@ -79,6 +79,12 @@ def edit_profile(request):
         messages.info(request, 'Профиль был создан, так как его ранее не существовало.')
 
     if request.method == 'POST':
+        # Получаем новую роль из формы
+        new_role = request.POST.get('role')
+        if new_role in ['doctor', 'patient']:
+            profile.role = new_role
+            profile.save()
+            return redirect('account')
         # Передаем профиль в форму для редактирования
         form = ProfileEditForm(request.POST, instance=profile, request=request)  # Передаем request
         if form.is_valid():
